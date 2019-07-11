@@ -19777,7 +19777,7 @@
                 , _ = t("./InfoHotspot")
                 , b = {
                   mouseViewMode: i.observable("drag"),
-                  autorotateEnabled: i.observable(!0),
+                  autorotateEnabled: i.observable(!1),
                   fullscreenButton: i.observable(!1),
                   viewControlButtons: i.observable(!1)
               }
@@ -19792,6 +19792,7 @@
                   })
               }),
               document.getElementById("selectFilesInput").addEventListener("change", function() {
+                  console.log(this.value, this.files)
                   this.files && this.files.length > 0 && q(this.files),
                   this.value = null
               });
@@ -19998,7 +19999,9 @@
               }
           }
           function q(t) {
+              console.log(t)
               r(t, function(t, e) {
+                console.log(t, e)
                   function n(t) {
                       w.push(t.type, t.name, t.fileData, t.width, t.height)
                   }
@@ -20067,7 +20070,10 @@
       219: [function(t, e, n) {
           "use strict";
           e.exports = function(t, e, n) {
+            console.log(t[0].levels)
+            var arr = [];
               return {
+                  
                   scenes: t.map(function(t) {
                       var e = t.settings.linkHotspots.filter(function(t) {
                           return t.hasValidTarget()
@@ -20077,17 +20083,21 @@
                         , n = t.settings.infoHotspots.map(function(t) {
                           return t.toObject()
                       });
+                      e.length === 2 ? arr.push(e) : null;
                       return {
                           id: t.uniqueId(),
-                          name: t.name,
-                          levels: t.levels,
-                          faceSize: t.faceSize,
-                          initialViewParameters: t.settings.initialViewParameters,
+                          // name: t.name,
+                          // levels: t.levels,
+                          // faceSize: t.faceSize,
+                          // initialViewParameters: t.settings.initialViewParameters,
                           linkHotspots: e,
-                          infoHotspots: n
+                          // infoHotspots: n
                       }
                   }),
                   levels: t[0].levels,
+                  faceSize: t[0].faceSize,
+                  initialViewParameters: t[0].settings.initialViewParameters,
+                  defaultLinkHotspots: arr[0],
                   name: e,
                   settings: n
               }
@@ -20118,8 +20128,10 @@
                 , v = f.addChild("add_data").started();
               !function(t, e) {
                   var n = JSON.stringify(t, null, 2)
-                    , i = "var APP_DATA = " + (n = (n = n.replace(/\u2028/g, "\\u2028")).replace(/\u2029/g, "\\u2029")) + ";\n";
+                    , i = "var APP_DATA = " + (n = (n = n.replace(/\u2028/g, "\\u2028")).replace(/\u2029/g, "\\u2029")) + ";\n"
+                    , j = (n = (n = n.replace(/\u2028/g, "\\u2028")).replace(/\u2029/g, "\\u2029"));
                   e.add(["app-files"], "data.js", i)
+                  e.add(["app-files"], "imgData.json", j)
               }(t, m),
               v.successful({
                   tourData: t
